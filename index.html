@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rock, Paper, Scissors</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Rock, Paper, Scissors</h1>
+
+    <div id="gamefield">
+      <div id="player1" class="player"></div>
+      <div id="player2" class="player"></div>
+      <div id="texts">
+        <div id="lose" class="hidden"><h1>You lose</h1></div>
+        <div id="win" class="hidden"><h1>You win</h1></div>
+        <div id="draw" class="hidden"><h1>It's a draw</h1></div>
+      </div>
+    </div>
+
+    <div id="buttons">
+      <button class="rock"></button>
+      <button class="paper"></button>
+      <button class="scissors"></button>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", start);
+
+      const rock = document.querySelector(".rock");
+      const paper = document.querySelector(".paper");
+      const scissors = document.querySelector(".scissors");
+
+      const player = document.querySelector(".player");
+
+      const player1 = document.querySelector("#player1");
+      const player2 = document.querySelector("#player2");
+
+      let computerChoice = Math.floor(Math.random() * 3);
+      let userChoice = "";
+
+      function start() {
+        console.log("start");
+        getUserSelection();
+
+        function getUserSelection() {
+          console.log("Get user selection");
+          rock.addEventListener("click", rockAnimation);
+          paper.addEventListener("click", paperAnimation);
+          scissors.addEventListener("click", scissorsAnimation);
+        }
+
+        function rockAnimation() {
+          player1.classList.add("shake");
+          player1.addEventListener("animationend", rockPicked);
+          player2.classList.add("shake");
+          player2.addEventListener("animationend", rockPicked);
+        }
+
+        function paperAnimation() {
+          player1.classList.add("shake");
+          player1.addEventListener("animationend", paperPicked);
+          player2.classList.add("shake");
+          player2.addEventListener("animationend", paperPicked);
+        }
+
+        function scissorsAnimation() {
+          player1.classList.add("shake");
+          player1.addEventListener("animationend", scissorsPicked);
+          player2.classList.add("shake");
+          player2.addEventListener("animationend", scissorsPicked);
+        }
+
+        function rockPicked() {
+          userChoice = 0;
+          player1.classList.add("rock");
+          player1.classList.remove("shake");
+          player2.classList.remove("shake");
+
+          if (userChoice == computerChoice) {
+            console.log("it's a draw");
+            player2.classList.add("rock");
+            showDraw();
+          } else if (computerChoice == 1) {
+            console.log("you lose");
+            showLose();
+            player2.classList.add("paper");
+          } else if (computerChoice == 2) {
+            player2.classList.add("scissors");
+            console.log("you win");
+            showWin();
+          }
+        }
+
+        function paperPicked() {
+          userChoice = 1;
+          player1.classList.add("paper");
+          player1.classList.remove("shake");
+          player2.classList.remove("shake");
+
+          if (userChoice == computerChoice) {
+            console.log("it's a draw");
+            player2.classList.add("paper");
+            showDraw();
+          } else if (computerChoice == 0) {
+            console.log("you win");
+            showWin();
+            player2.classList.add("rock");
+          } else if (computerChoice == 2) {
+            console.log("you loose");
+            player2.classList.add("scissors");
+            showLose();
+          }
+        }
+
+        function scissorsPicked() {
+          userChoice = 2;
+          player1.classList.add("scissors");
+          player1.classList.remove("shake");
+          player2.classList.remove("shake");
+
+          if (userChoice == computerChoice) {
+            console.log("it's a draw");
+            player2.classList.add("scissors");
+            showDraw();
+          } else if (computerChoice == 0) {
+            console.log("you lose");
+            player2.classList.add("rock");
+            showLose();
+          } else if (computerChoice == 1) {
+            console.log("you win");
+            player2.classList.add("paper");
+            showWin();
+          }
+        }
+
+        function showWin() {
+          console.log("Show win");
+          document.querySelector("#win").style.display = "block";
+          document.querySelector("body").addEventListener("click", resetSpil);
+        }
+
+        function showLose() {
+          console.log("Show lose");
+          document.querySelector("#lose").style.display = "block";
+          document.querySelector("body").addEventListener("click", resetSpil);
+        }
+
+        function showDraw() {
+          console.log("Show draw");
+          document.querySelector("#draw").style.display = "block";
+          // document.querySelector("main").addEventListener("click", reset);
+
+          document.querySelector("body").addEventListener("click", resetSpil);
+        }
+
+        function resetSpil() {
+          console.log("reset");
+          this.classList = "";
+          this.offsetLeft;
+          document.querySelector("#lose").style.display = "none";
+          document.querySelector("#win").style.display = "none";
+          document.querySelector("#draw").style.display = "none";
+
+          getUserSelection();
+        }
+      }
+    </script>
+  </body>
+</html>
